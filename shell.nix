@@ -1,22 +1,7 @@
-let
-  rust_overlay = import (builtins.fetchTarball https://github.com/oxalica/rust-overlay/archive/72fa0217f76020ad3aeb2dd9dd72490905b23b6f.tar.gz);
-  pkgs = import (builtins.fetchTarball https://github.com/SuteraVR/nixpkgs/archive/46c06934f04dd1ac01fbcbe8c366bca2ef03ecf9.tar.gz) {
-    overlays = [
-      rust_overlay
-    ];
-  };
-  rustVersion = "1.75.0";
-  rust = pkgs.rust-bin.stable.${rustVersion}.default.override {
-    extensions = [
-      "rust-src"
-      "rust-analyzer"
-    ];
-  };
-in
-pkgs.mkShell {
-  packages = with pkgs; [
-    rust
-    godot4-mono
-    dotnet-sdk
-  ];
-}
+(import (
+  fetchTarball {
+    url = "https://github.com/edolstra/flake-compat/archive/12c64ca55c1014cdc1b16ed5a804aa8576601ff2.tar.gz";
+    sha256 = "0jm6nzb83wa6ai17ly9fzpqc40wg1viib8klq8lby54agpl213w5"; }
+) {
+  src =  ./.;
+}).shellNix
